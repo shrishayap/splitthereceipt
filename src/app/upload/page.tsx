@@ -72,8 +72,8 @@ export default function App() {
                 </div>
 
                 <h1 className='text-2xl font-semibold text-white'>Upload Receipt</h1>
-                <p className='text-lg text-white'>Upload an image of your receipt. We only accpet image files for now (.png, .jpg, or .jpeg). On mobile devices, you can also take a photo. Please make sure the receipt is in the center of the image and the text is as legible as possible. </p>
-
+                <p className='text-lg text-white'>Upload an image of your receipt. We only accpet image files for now (.png, .jpg, or .jpeg). Please make sure the receipt is as legible as possible. </p>
+                <p className='text-lg text-white font-bold'>This function runs on a serverless runtime and might timeout. If it does, try uploading again.</p>
 
                 <div className='flex justify-center pt-3'>
                     <input type="file" name="file" id="file" className='hidden' accept="image/png, image/jpeg, image/jpg" onInput={handleFileUpload} />
