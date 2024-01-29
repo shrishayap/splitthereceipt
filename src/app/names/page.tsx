@@ -81,6 +81,11 @@ export default function App() {
                             placeholder='John Doe'
                             id='new-name'
                             value={newName}
+                            onKeyDown={e => {
+                                if (e.key === "Enter") {
+                                    handleAddName();
+                                }
+                            }}
                             onChange={e => setNewName(e.target.value)}
                             className='rounded-lg px-4 py-2 border-2 border-white w-full text-black'
                         />
