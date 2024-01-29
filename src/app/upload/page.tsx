@@ -28,7 +28,7 @@ export default function App() {
         //format data and send
         const formData = new FormData();
         formData.set('file', file);
-        const receiptData = await fetch('/api/img-process', {
+        const receiptData = await fetch('https://receipt-parser-2ascns6ora-ue.a.run.app/img-process', {
             method: 'POST',
             body: formData
         })
@@ -41,8 +41,6 @@ export default function App() {
 
         try {
             const receiptJSON = await receiptData.json();
-            console.log(receiptJSON);
-            console.log(receiptJSON.items);
             localStorage.setItem('items', JSON.stringify(receiptJSON.items));
             localStorage.setItem('tax', receiptJSON.tax.toFixed(2));
             localStorage.setItem('tip', receiptJSON.tip.toFixed(2));
@@ -73,10 +71,9 @@ export default function App() {
 
                 <h1 className='text-2xl font-semibold text-white'>Upload Receipt</h1>
                 <p className='text-lg text-white'>Upload an image of your receipt. We only accpet image files for now (.png, .jpg, or .jpeg). Please make sure the receipt is as legible as possible. </p>
-                <p className='text-lg text-white font-bold'>This function runs on a serverless runtime and might timeout. If it does, try uploading again.</p>
 
                 <div className='flex justify-center pt-3'>
-                    <input type="file" name="file" id="file" className='hidden' accept="image/png, image/jpeg, image/jpg" onInput={handleFileUpload} />
+                    <input type="file" name="file" id="file" className='hidden' accept="image/*" onInput={handleFileUpload} />
                     {!loading ?
                         <label
                             htmlFor="file"

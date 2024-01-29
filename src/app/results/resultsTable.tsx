@@ -33,7 +33,7 @@ export const ResultsTable = ({ items, names, tax, tip }: ResultsTableProps) => {
                 </thead>
                 <tbody>
                     {names.map((name, index) => (
-                        <Row key={index} items={items} name={name} initialOpen={index === 0} tax={tax} tip={tip} subtotal={subtotal}/>
+                        <Row key={index} items={items} name={name} initialOpen={true} tax={tax} tip={tip} subtotal={subtotal}/>
                     ))}
                 </tbody>
             </Table>
