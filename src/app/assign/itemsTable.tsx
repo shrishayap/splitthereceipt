@@ -9,7 +9,7 @@ import Checkbox from "@mui/joy/Checkbox";
 import EditableText from "./editableText";
 import { EditableCurrency } from "./editableCurrency";
 import EditableNumber from "./editableNumber";
-
+import { MdDeleteOutline } from "react-icons/md";
 
 interface ItemsTableProps {
     items: Item[];
@@ -47,6 +47,29 @@ export const ItemsTable = ({ items, names, setItems }: ItemsTableProps) => {
         window.localStorage.setItem("items", JSON.stringify(newItems));
     }
 
+    const handleItemDelete = (index: number) => {
+        if (items.length === 1) {
+            alert("You must have at least one item");
+            return;
+        }
+        const newItems = [...items];
+        newItems.splice(index, 1);
+        setItems(newItems);
+        window.localStorage.setItem("items", JSON.stringify(newItems));
+    }
+
+    const handleItemAdd = () => {
+        const newItems = [...items];
+        newItems.push({
+            name: "New Item",
+            price: 0.00,
+            quantity: 1,
+            people: []
+        });
+        setItems(newItems);
+        window.localStorage.setItem("items", JSON.stringify(newItems));
+    }
+
     return (
         <div className='bg-white w-full rounded-lg pt-2 mt-2'>
 
@@ -59,12 +82,28 @@ export const ItemsTable = ({ items, names, setItems }: ItemsTableProps) => {
                         <th style={{ width: '40%' }}>Item Name</th>
                         <th>Price</th>
                         <th>Quantity</th>
+                        <th style={{ width: 40 }} aria-label="empty" />
                     </tr>
                 </thead>
                 <tbody>
                     {items.map((item, index) => (
-                        <Row key={index} item={item} names={names} changeName={(name) => handleItemNameChange(index, name)} changePrice={(price) => handleItemPriceChange(index, price)} changeQuantity={(quantity) => handleItemQuantityChange(index, quantity)} handleItemPeopleChange={(people) => handleItemPeopleChange(index, people)} initialOpen={index === 0}/>
+                        <Row key={index} item={item} names={names} handleItemDelete={() => handleItemDelete(index)} changeName={(name) => handleItemNameChange(index, name)} changePrice={(price) => handleItemPriceChange(index, price)} changeQuantity={(quantity) => handleItemQuantityChange(index, quantity)} handleItemPeopleChange={(people) => handleItemPeopleChange(index, people)} initialOpen={index === 0} />
                     ))}
+
+                    <tr>
+                        <td colSpan={5}>
+                            <div className='flex justify-center'>
+                                <button
+                                    aria-label="Add item"
+                                    onClick={() => handleItemAdd()}
+                                    className='py-2 px-4 bg-white hover:bg-slate-200 rounded-lg w-full'
+                                >
+                                    Add item
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
                 </tbody>
             </Table>
         </div>
@@ -78,10 +117,11 @@ interface RowProps {
     changeQuantity: (quantity: number) => void;
     changePrice: (price: number) => void;
     handleItemPeopleChange: (people: string[]) => void;
+    handleItemDelete: () => void;
     initialOpen?: boolean;
 }
 
-function Row({ item, names, changeName, changePrice, changeQuantity, handleItemPeopleChange, initialOpen = false }: RowProps) {
+function Row({ item, names, changeName, changePrice, changeQuantity, handleItemPeopleChange, handleItemDelete, initialOpen = false }: RowProps) {
 
     const [open, setOpen] = React.useState(initialOpen);
     const [internalName, setInternalName] = React.useState(item.name);
@@ -137,18 +177,26 @@ function Row({ item, names, changeName, changePrice, changeQuantity, handleItemP
                     </button>
                 </td>
                 <th>
-                    <EditableText  value={internalName} setValue={setInternalName} />
+                    <EditableText value={internalName} setValue={setInternalName} />
                 </th>
                 <td>
-                    <EditableCurrency  value={internalPrice} setValue={setInternalPrice} />
+                    <EditableCurrency value={internalPrice} setValue={setInternalPrice} />
                 </td>
                 <td>
                     <EditableNumber value={internalQuantity} setValue={setInternalQuantity} />
                 </td>
+                <td>
+                    <button
+                        aria-label="Delete item"
+                        onClick={() => handleItemDelete()}
+                    >
+                        <MdDeleteOutline />
+                    </button>
+                </td>
             </tr>
 
             <tr>
-                <td style={{ height: 0, padding: 0 }} colSpan={4}>
+                <td style={{ height: 0, padding: 0 }} colSpan={5}>
                     {open && (
 
                         <div className="flex flex-wrap py-3 px-[40px] bg-slate-200">

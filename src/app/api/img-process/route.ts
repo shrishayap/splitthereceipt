@@ -16,9 +16,7 @@ export async function POST(request: NextRequest) {
         return new Response("No file provided", { status: 400 });
     }
     const extension = file.name.split('.').pop();
-    if (extension !== "png" && extension !== "jpg" && extension !== "jpeg") {
-        return new Response("Invalid file type", { status: 400 });
-    }
+
 
     //save the buffer to an image file of type png
     const bytes = await file.arrayBuffer();

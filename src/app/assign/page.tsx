@@ -6,6 +6,10 @@ import EditableCurrency from './editableCurrency';
 import ItemsTable from './itemsTable';
 import Link from 'next/link';
 import ResultsTable from '../results/resultsTable';
+import Modal from '@mui/joy/Modal';
+import DialogTitle from '@mui/joy/DialogTitle';
+import ModalDialog from '@mui/joy/ModalDialog';
+import DialogContent from '@mui/joy/DialogContent';
 
 export interface Item {
     name: string;
@@ -22,6 +26,7 @@ export default function App() {
     const [tip, setTip] = useState<number | null>(null);
     const [names, setNames] = useState<string[]>([]);
     const [items, setItems] = useState<Item[]>([]);
+    const [open, setOpen] = useState(false);
 
 
     useEffect(() => {
@@ -94,7 +99,9 @@ export default function App() {
                             <p className='text-lg text-white pt-1'>Assign people to an item by clicking the dropdown next to the item name and selecting the person's name. Click again to deselect the person. Selecting multiple people per item will split it evenly between them. </p>
                             <p className='text-lg text-white pt-1'>You can edit the name of the item, price, and quantity. Subtotal is calculated automatically, so verify at the end that it matches the receipt.</p>
                             <p className='text-lg text-white pt-1'>Quantity is the number of that item that was ordered. For example, if 3 people ordered a burger for $15 per burger, the quantity would be 3 and the price would be $45</p>
+
                             <ItemsTable items={items} setItems={setItems} names={names} />
+
 
                             <div className='grid grid-cols-2 gap-2 md:gap-4 p-2 bg-white rounded-lg mt-2'>
                                 <div className='flex space-x-2'>
@@ -140,7 +147,6 @@ export default function App() {
                 <Link href='/results' className='xl:hidden px-4 py-2 border-2 bg-white w-full rounded-lg text-black text-center hover:cursor-pointer self-center'>See Results</Link>
 
             </div>
-
 
 
         </main >
