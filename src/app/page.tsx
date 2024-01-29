@@ -30,7 +30,7 @@ export default function Home() {
               </button>
             </Link>
 
-            <Link href='/demo' className='w-full'>
+            <Link href='https://youtu.be/VR6RQ9RMOHA' className='w-full'>
               <button className='rounded-md px-4 py-2 border-2 border-white w-full hover:bg-stone-800'>
                 Watch demo
               </button>
